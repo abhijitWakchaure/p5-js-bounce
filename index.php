@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bounce[beta] : PlanetTech Labs</title>
+    <title>Bounce[beta] : by Abhijit Wakchaure</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <script src="../p5.min.js"></script>
-    <script src="../p5.dom.min.js"></script>
-    <script src="ball.js?v=<?php echo time(); ?>"></script>
-    <script src="stick.js?v=<?php echo time(); ?>"></script>
-    <script src="sketch.js?v=<?php echo time(); ?>"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105237021-4"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments)}; gtag('js', new Date()); gtag('config', 'UA-105237021-4');
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/addons/p5.dom.min.js"></script>
+    <script src="ball.js?v=3"></script>
+    <script src="stick.js?v=2"></script>
+    <script src="sketch.js?v=3"></script>
     <style>
       body{
         padding: 0em; 
@@ -42,7 +39,7 @@
     </style>
   </head>
   <body>
-    <h3><b>Bounce</b><sup>[beta]</sup> by PlanetTech Labs</h3>
+    <h3><b>Bounce</b><sup>[beta]</sup> by Abhijit Wakchaure</h3>
     <p class="instructions">
       <b>Instructions:</b> 1. Space to Jump 2. Press Control to Restart Game or click here
       <button id="resetButton" onclick="resetGame()">Reset Game</button>
