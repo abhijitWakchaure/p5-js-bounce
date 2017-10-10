@@ -3,6 +3,7 @@ var minht;
 var sticks = [];
 var score;
 var isGameOver;
+var highscore;
 var touchCorrection = true;
 function setup(){
 	createCanvas(windowWidth-10,400);
@@ -10,6 +11,7 @@ function setup(){
 	sticks.push(new stick());
 	minht = height-20;
 	score = 0;
+	highscore = 0;
 	isGameOver = false;
 	frameRate(50);
 }
@@ -20,21 +22,6 @@ function draw(){
 	
 	if(frameCount % 50 == 0){
 		sticks.push(new stick());
-	}
-	if(score%10 == 0 && score != 0){
-		ball.showHot();
-		ball.update();
-		fill(255);
-		textSize(40);
-		textAlign(CENTER);
-		text("FASTER", width/2, height/2);
-		for (var i = sticks.length - 1; i >= 0; i--) {
-			sticks[i].faster();
-		}
-	}
-	else{
-		ball.show();
-		ball.update();
 	}
 	if(isGameOver){
 		textSize(40);
@@ -47,6 +34,10 @@ function draw(){
 		textAlign(LEFT);
 		fill(255);
 		text("Score: "+score, 10, 25);
+		if(score >= highscore){
+			highscore = score;
+		}
+		text("High Score: "+highscore, 10, 50);
 		for (var i = sticks.length - 1; i >= 0; i--) {
 			sticks[i].show();
 			sticks[i].update();
@@ -59,6 +50,21 @@ function draw(){
 				sticks.splice(i,1);
 			}
 		}
+	}
+	if(score%10 == 0 && score != 0){
+		ball.showHot();
+		ball.update();
+		fill(255);
+		textSize(40);
+		textAlign(CENTER);
+		text("FASTER", width/2, height/3);
+		for (var i = sticks.length - 1; i >= 0; i--) {
+			sticks[i].faster();
+		}
+	}
+	else{
+		ball.show();
+		ball.update();
 	}
 }
 
