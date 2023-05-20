@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bounce[beta] : by Abhijit Wakchaure</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link href="/css/bootstrap-v5.2.3.min.css" rel="stylesheet" />
+    <style>
+      html,
+      body {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="header" class="navbar navbar-dark navbar-expand-lg bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><b>Bounce</b> by Abhijit Wakchaure</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbar"
+          aria-controls="navbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#newGameModal"
+                >Start New Game</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#instructionsModal"
+                >How to Play</a
+              >
+            </li>
+          </ul>
+          <div class="d-flex">
+            <button class="btn btn-light" type="button" onclick="resetGame()">
+              Reset Game
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid px-1 py-1">
+      <div id="canvas"></div>
+    </div>
+
+    <!-- New Game Modal -->
+    <div
+      class="modal fade"
+      id="newGameModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="newGameModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="newGameModalLabel">
+              Start New Game
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="playerNameInput" class="form-label"
+                  >Player Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="playerNameInput"
+                  aria-describedby="playerNameInputHelp"
+                />
+                <div id="playerNameInputHelp" class="form-text">
+                  Your name may appear in high score
+                </div>
+              </div>
+              <div class="text-center">
+                <button
+                  type="button"
+                  onclick="registerPlayerName()"
+                  class="btn btn-lg btn-primary"
+                >
+                  Start the Game
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: New Game Modal -->
+
+    <!-- Instructions Modal -->
+    <div
+      class="modal fade"
+      id="instructionsModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="instructionsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="instructionsModalLabel">
+              How to Play
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ol class="list-group list-group-flush">
+              <li class="list-group-item align-items-start">
+                <div class="ms-2">
+                  <div class="fw-bold">Bounce the ball</div>
+                  <b>Touch</b> the screen or press <b>Space</b> button to make
+                  the ball jump / bounce. You get points when you bounce the
+                  ball, so more bounces more is the score.
+                </div>
+              </li>
+              <li class="list-group-item align-items-start">
+                <div class="ms-2">
+                  <div class="fw-bold">Reset the game</div>
+                  If you wish to restart the game you can press the red button
+                  on top right corner
+                </div>
+              </li>
+            </ol>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: Instructions Modal -->
+
+    <script src="/js/bootstrap-v5.2.3.bundle.min.js"></script>
+    <script src="/js/p5-v1.6.0.min.js"></script>
+    <script src="/js/p5-v1.6.0.sound.min.js"></script>
+    <script src="/js/ball.js?v=3"></script>
+    <script src="/js/stick.js?v=3"></script>
+    <script src="/js/sketch.js?v=3"></script>
+  </body>
+</html>
