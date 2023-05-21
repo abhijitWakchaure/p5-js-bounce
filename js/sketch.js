@@ -4,38 +4,27 @@ var sticks = [];
 var score;
 var highscore;
 var canvasWidth, canvasHeight
+var ballStarX;
 var isGameOver = false;
 var gamePaused = false;
 var touchCorrection = true;
 
 function setup() {
-	// rectMode(CENTER) interprets the first two parameters as the shape's center point, while the third and fourth parameters are its width and height.
-	rectMode(CENTER);
-
 	var headerParent = document.getElementById("header")
 	var canvasParent = document.getElementById("canvas")
 	canvasWidth = windowWidth - (windowWidth - canvasParent.offsetWidth - 2)
 	canvasHeight = windowHeight - headerParent.offsetHeight - 15
 	var c = createCanvas(canvasWidth, canvasHeight);
 	c.parent("canvas");
-	ball = new ball(40, height / 2);
+	// rectMode(CENTER) interprets the first two parameters as the shape's center point, while the third and fourth parameters are its width and height.
+	rectMode(CENTER);
+	ballStarX = width / 4
+	ball = new ball(ballStarX, height / 2);
 	sticks.push(new stick());
 	minht = height - 20;
 	score = 0;
 	highscore = getHighScore().score;
 	frameRate(60);
-}
-
-function displayScore() {
-	textSize(20);
-	textAlign(LEFT);
-	fill(255);
-	text(`${getPlayerName()}: ${score}`, canvasWidth - 150, 25, 300, 50);
-	if (score >= highscore) {
-		highscore = score;
-	}
-	if (highscore == 0 || score === highscore) return
-	text(`${getHighScore().highScorer}: ${highscore}`, canvasWidth - 150, 50, 300, 50);
 }
 
 function draw() {
@@ -48,7 +37,7 @@ function draw() {
 		return
 	}
 
-	if (frameCount % 30 == 0) {
+	if (frameCount % 100 == 0) {
 		sticks.push(new stick());
 	}
 	for (var i = sticks.length - 1; i >= 0; i--) {
@@ -77,14 +66,32 @@ function draw() {
 		ball.showHot();
 		textSize(40);
 		textAlign(CENTER);
-		text("FASTER", width / 2, height / 3);
-		for (var i = sticks.length -1; i >= 0; i--) {
+		text("Faster", width / 2, height / 3);
+		for (var i = sticks.length - 1; i >= 0; i--) {
 			sticks[i].faster();
 		}
 	} else {
 		ball.show();
 	}
+
+	if (score % 15 == 0 && score != 0) {
+		for (var i = sticks.length - 1; i >= 0; i--) {
+			sticks[i].normalSpeed();
+		}
+	}
 	ball.update();
+}
+
+function displayScore() {
+	textSize(20);
+	textAlign(LEFT);
+	fill(255);
+	text(`${getPlayerName()}: ${score}`, canvasWidth - 150, 25, 300, 50);
+	if (score >= highscore) {
+		highscore = score;
+	}
+	if (highscore == 0 || score === highscore) return
+	text(`${getHighScore().highScorer}: ${highscore}`, canvasWidth - 150, 50, 300, 50);
 }
 
 function keyPressed() {
@@ -92,7 +99,7 @@ function keyPressed() {
 		ball.bounce();
 		score++;
 	}
-	if (keyCode == CONTROL) {
+	if (keyCode == CONTROL || key == 'r') {
 		resetGame();
 	}
 	return false;
@@ -112,7 +119,7 @@ function gameOver() {
 	noLoop();
 }
 function resetGame() {
-	ball.reposition(40, height / 2);
+	ball.reposition(ballStarX, height / 2);
 	score = 0;
 	sticks = [];
 	isGameOver = false;

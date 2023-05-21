@@ -1,7 +1,7 @@
 function ball(x, y) {
 	this.x = x;
 	this.y = y;
-	this.r = 10;
+	this.r = 20;
 	this.velocity = 0;
 	this.gravity = 0.6;
 	this.lift = -15;
@@ -43,5 +43,21 @@ function ball(x, y) {
 
 	this.bounceTouch = function () {
 		this.velocity += this.lift / 2;
+	}
+
+	this.minX = function() {
+		return this.x - this.r
+	}
+
+	this.maxX = function() {
+		return this.x + this.r
+	}
+
+	this.minY = function() {
+		return this.y - this.r
+	}
+
+	this.maxY = function() {
+		return this.y + this.r
 	}
 }
