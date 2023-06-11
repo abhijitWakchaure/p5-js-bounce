@@ -3,12 +3,16 @@ function stick() {
 	this.hTop = random(height * 0.20, height * 0.70);
 	this.hBottom = height - (this.hTop + this.ballSpace)
 	this.x = width;
-	this.w = 30;
+	this.w = 100;
 	this.speed = 4;
 
 	this.show = function () {
-		rect(this.x, this.hTop / 2, this.w, this.hTop);
-		rect(this.x, height - (this.hBottom / 2), this.w, this.hBottom);
+		fill(255);
+		// rect(this.x, this.hTop / 2, this.w, this.hTop);
+		// rect(this.x, height - (this.hBottom / 2), this.w, this.hBottom);
+
+		image(bgPipeInverted, this.x, 0, this.w, this.hTop);
+		image(bgPipe, this.x, height - this.hBottom, this.w, this.hBottom);
 	}
 	this.showRed = function () {
 		fill('red');
@@ -31,13 +35,15 @@ function stick() {
 	}
 	this.hits = function (ball) {
 		// fast check if ball already passed the stick
-		if (ball.minX() > this.x + this.w / 2) {
+		if (ball.minX() > this.x + this.w + 10) {
 			return false
 		}
+
 		// fast check if ball is far away from stick
-		if (ball.maxX() < this.x - this.w / 2) {
+		if (ball.maxX() - 10 < this.x) {
 			return false
 		}
+
 		// check if ball is hitting top stick
 		if (ball.minY() <= this.hTop) {
 			let c = color(255, 0, 0);
@@ -52,6 +58,32 @@ function stick() {
 			noStroke();
 			return true;
 		}
+		
+		// Calculations for rectMode == CENTER
+		// // fast check if ball already passed the stick
+		// if (ball.minX() > this.x + this.w / 2) {
+		// 	return false
+		// }
+		// // fast check if ball is far away from stick
+		// if (ball.maxX() < this.x - this.w / 2) {
+		// 	return false
+		// }
+		// // check if ball is hitting top stick
+		// if (ball.minY() <= this.hTop) {
+		// 	let c = color(255, 0, 0);
+		// 	fill(c);
+		// 	noStroke();
+		// 	return true;
+		// }
+		// // check if ball is hitting bottom stick
+		// if (ball.maxY() >= height - this.hBottom) {
+		// 	let c = color(255, 0, 0);
+		// 	fill(c);
+		// 	noStroke();
+		// 	return true;
+		// }
+
+
 		// if ((ball.y - ball.r) < this.hTop || (ball.y + ball.r) > height - this.hBottom) {
 		// 	if (ball.x + ball.r > this.x && ball.x - ball.r < this.x + this.w) {
 		// 		let c = color(255, 0, 0);

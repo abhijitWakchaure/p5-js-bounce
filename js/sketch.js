@@ -8,16 +8,22 @@ var ballStarX;
 var isGameOver = false;
 var gamePaused = false;
 var touchCorrection = true;
+var bgImage;
+var bgPipe, bgPipeInverted;
+
+function preload() {
+	bgImage = loadImage('images/background.jpeg')
+	bgPipe = loadImage('images/pipe.png')
+	bgPipeInverted = loadImage('images/pipeInverted.png')
+}
 
 function setup() {
 	var headerParent = document.getElementById("header")
 	var canvasParent = document.getElementById("canvas")
-	canvasWidth = windowWidth - (windowWidth - canvasParent.offsetWidth - 2)
-	canvasHeight = windowHeight - headerParent.offsetHeight - 15
+	canvasWidth = windowWidth - (windowWidth - canvasParent.offsetWidth) + 12
+	canvasHeight = windowHeight - headerParent.offsetHeight - 7
 	var c = createCanvas(canvasWidth, canvasHeight);
 	c.parent("canvas");
-	// rectMode(CENTER) interprets the first two parameters as the shape's center point, while the third and fourth parameters are its width and height.
-	rectMode(CENTER);
 	ballStarX = width / 4
 	ball = new ball(ballStarX, height / 2);
 	sticks.push(new stick());
@@ -28,7 +34,7 @@ function setup() {
 }
 
 function draw() {
-	background(51);
+	background(bgImage);
 	if (gamePaused) {
 		console.log("game is paused")
 		return
@@ -84,23 +90,23 @@ function displayScore() {
 	// Draw white rectangle
 	fill(255);
 	textSize(20)
-	rect(canvasWidth - 160, 60, 300, 100);
+	rect(canvasWidth - 310, 10, 300, 110);
 
 	textSize(20);
 	textAlign(LEFT, TOP);
 	fill(0);
 	textStyle(BOLD);
-	text(`Score:`, canvasWidth - 150, 40, 300, 50);
+	text(`Score:`, canvasWidth - 300, 25, 300, 50);
 	textStyle(NORMAL);
-	text(`${getPlayerName()}: ${score}`, canvasWidth - 150, 60, 300, 50);
+	text(`${getPlayerName()}: ${score}`, canvasWidth - 300, 45, 300, 50);
 	if (score >= highscore) {
 		highscore = score;
 	}
 	if (highscore == 0 || score === highscore) return
 	textStyle(BOLD);
-	text(`High Score:`, canvasWidth - 150, 90, 300, 50);
+	text(`High Score:`, canvasWidth - 300, 75, 300, 50);
 	textStyle(NORMAL);
-	text(`${getHighScore().highScorer}: ${highscore}`, canvasWidth - 150, 110, 300, 50);
+	text(`${getHighScore().highScorer}: ${highscore}`, canvasWidth - 300, 95, 300, 50);
 	// Reset colors
 	fill(255);
 }
@@ -126,10 +132,10 @@ function touchStarted() {
 }
 
 function gameOver() {
-	var rectX = width / 2;
-	var rectY = height / 2;
 	var rectWidth = 500;
 	var rectHeight = 200;
+	var rectY = height / 2 - rectHeight / 2;
+	var rectX = width / 2 - rectWidth / 2;
 	var rectBorderRadius = 20;
 
 	// Draw rectangle with black border
@@ -138,22 +144,22 @@ function gameOver() {
 	rect(rectX, rectY, rectWidth, rectHeight, rectBorderRadius, rectBorderRadius, rectBorderRadius, rectBorderRadius);
 	stroke(0)
 	// inner rect
-	rect(rectX, rectY, rectWidth - 20, rectHeight - 20, rectBorderRadius, rectBorderRadius, rectBorderRadius, rectBorderRadius);
+	rect(rectX + 10, rectY + 10, rectWidth - 20, rectHeight - 20, rectBorderRadius, rectBorderRadius, rectBorderRadius, rectBorderRadius);
 	noStroke()
 
 	// Draw "Game Over" text in big font
 	fill(0);
 	textSize(48);
 	textAlign(CENTER, CENTER);
-	text("Game Over", width / 2, rectY - (rectHeight / 2) + 60);
+	text("Game Over", width / 2, rectY + 45);
 
 	// Draw "Your score is: --" text in smaller font
 	textSize(24);
-	text(`Your score is: ${score}`, width / 2, rectY + (rectHeight / 3) - 40);
+	text(`Your score is: ${score}`, width / 2, rectY + (rectHeight / 2));
 
 	tip = "Try not to touch the edges or pipes"
 	textStyle(ITALIC);
-	text(tip, width / 2, rectY + (rectHeight / 2) - 30);
+	text(tip, width / 2, rectY + rectHeight - 30);
 	textStyle(NORMAL);
 
 	// Reset textAlign

@@ -8,13 +8,17 @@ function ball(x, y) {
 
 	this.show = function () {
 		fill(255, 193, 7);
-		noStroke();
+		strokeWeight(2);
+		stroke(51);
 		ellipse(this.x, this.y, this.r * 2, this.r * 2)
+		noStroke();
 	}
 	this.showHot = function () {
 		fill(255, 152, 0);
-		noStroke();
+		strokeWeight(2);
+		stroke(252, 136, 3);
 		ellipse(this.x, this.y, this.r * 2, this.r * 2)
+		noStroke();
 		fill(255);
 	}
 	this.update = function () {
