@@ -45,19 +45,24 @@ function ball(x, y) {
 		this.velocity += this.lift / 2;
 	}
 
-	this.minX = function() {
+	this.minX = function () {
 		return this.x - this.r
 	}
 
-	this.maxX = function() {
+	this.maxX = function () {
 		return this.x + this.r
 	}
 
-	this.minY = function() {
+	this.minY = function () {
 		return this.y - this.r
 	}
 
-	this.maxY = function() {
+	this.maxY = function () {
 		return this.y + this.r
+	}
+
+	this.edged = function () {
+		if (this.minY() <= 0 || this.maxY() >= height) return true
+		return false
 	}
 }

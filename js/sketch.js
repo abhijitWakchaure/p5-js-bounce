@@ -24,14 +24,11 @@ function setup() {
 	minht = height - 20;
 	score = 0;
 	highscore = getHighScore().score;
-	frameRate(60);
+	frameRate(120);
 }
 
 function draw() {
 	background(51);
-	//ball.fall(minht);
-	displayScore()
-
 	if (gamePaused) {
 		console.log("game is paused")
 		return
@@ -52,10 +49,10 @@ function draw() {
 			sticks.splice(i, 1);
 		}
 	}
+	if (ball.edged()) {
+		isGameOver = true;
+	}
 	if (isGameOver) {
-		textSize(40);
-		textAlign(CENTER);
-		text("Score: " + score, width / 2, height / 2);
 		if (score >= highscore) {
 			setHighScore(score)
 		}
@@ -80,18 +77,32 @@ function draw() {
 		}
 	}
 	ball.update();
+	displayScore()
 }
 
 function displayScore() {
-	textSize(20);
-	textAlign(LEFT);
+	// Draw white rectangle
 	fill(255);
-	text(`${getPlayerName()}: ${score}`, canvasWidth - 150, 25, 300, 50);
+	textSize(20)
+	rect(canvasWidth - 160, 60, 300, 100);
+
+	textSize(20);
+	textAlign(LEFT, TOP);
+	fill(0);
+	textStyle(BOLD);
+	text(`Score:`, canvasWidth - 150, 40, 300, 50);
+	textStyle(NORMAL);
+	text(`${getPlayerName()}: ${score}`, canvasWidth - 150, 60, 300, 50);
 	if (score >= highscore) {
 		highscore = score;
 	}
 	if (highscore == 0 || score === highscore) return
-	text(`${getHighScore().highScorer}: ${highscore}`, canvasWidth - 150, 50, 300, 50);
+	textStyle(BOLD);
+	text(`High Score:`, canvasWidth - 150, 90, 300, 50);
+	textStyle(NORMAL);
+	text(`${getHighScore().highScorer}: ${highscore}`, canvasWidth - 150, 110, 300, 50);
+	// Reset colors
+	fill(255);
 }
 
 function keyPressed() {
@@ -109,13 +120,44 @@ function touchStarted() {
 		ball.bounce();
 		score++;
 		touchCorrection = false;
-	}
-	else {
+	} else {
 		touchCorrection = true;
 	}
 }
 
 function gameOver() {
+	var rectX = width / 2;
+	var rectY = height / 2;
+	var rectWidth = 500;
+	var rectHeight = 200;
+	var rectBorderRadius = 20;
+
+	// Draw rectangle with black border
+	fill(255);
+	// outer rect
+	rect(rectX, rectY, rectWidth, rectHeight, rectBorderRadius, rectBorderRadius, rectBorderRadius, rectBorderRadius);
+	stroke(0)
+	// inner rect
+	rect(rectX, rectY, rectWidth - 20, rectHeight - 20, rectBorderRadius, rectBorderRadius, rectBorderRadius, rectBorderRadius);
+	noStroke()
+
+	// Draw "Game Over" text in big font
+	fill(0);
+	textSize(48);
+	textAlign(CENTER, CENTER);
+	text("Game Over", width / 2, rectY - (rectHeight / 2) + 60);
+
+	// Draw "Your score is: --" text in smaller font
+	textSize(24);
+	text(`Your score is: ${score}`, width / 2, rectY + (rectHeight / 3) - 40);
+
+	tip = "Try not to touch the edges or pipes"
+	textStyle(ITALIC);
+	text(tip, width / 2, rectY + (rectHeight / 2) - 30);
+	textStyle(NORMAL);
+
+	// Reset textAlign
+	textAlign(LEFT, TOP)
 	noLoop();
 }
 function resetGame() {
@@ -198,3 +240,15 @@ instructionsModalEl.addEventListener('hide.bs.modal', event => {
 // 	if (getPlayerName() === "Guest")
 // 		newGameModal.show(newGameModalEl)
 // })
+
+if (typeof console != "undefined")
+	if (typeof console.log != 'undefined')
+		console.olog = console.log;
+	else
+		console.olog = function () { };
+
+console.log = function (message) {
+	console.olog(message);
+	document.getElementById('debugDiv').append('<p>' + message + '</p>');
+};
+console.error = console.debug = console.info = console.log
