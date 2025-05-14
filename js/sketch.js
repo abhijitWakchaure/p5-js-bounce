@@ -69,7 +69,9 @@ function draw() {
 		ball.showHot();
 		textSize(40);
 		textAlign(CENTER);
-		text("Faster", width / 2, height / 3);
+		fill(255, 152, 0)
+		stroke(0)
+		text("SPEED++", width / 2, height / 3);
 		for (var i = sticks.length - 1; i >= 0; i--) {
 			sticks[i].faster();
 		}
@@ -89,6 +91,7 @@ function draw() {
 function displayScore() {
 	// Draw white rectangle
 	fill(255);
+	stroke(255);
 	textSize(20)
 	rect(canvasWidth - 310, 10, 300, 110);
 

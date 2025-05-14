@@ -13,6 +13,7 @@ function stick() {
 
 		image(bgPipeInverted, this.x, 0, this.w, this.hTop);
 		image(bgPipe, this.x, height - this.hBottom, this.w, this.hBottom);
+		// rect(this.x, height - this.hBottom, this.w, this.hBottom);
 	}
 	this.showRed = function () {
 		fill('red');
@@ -58,7 +59,7 @@ function stick() {
 			noStroke();
 			return true;
 		}
-		
+
 		// Calculations for rectMode == CENTER
 		// // fast check if ball already passed the stick
 		// if (ball.minX() > this.x + this.w / 2) {

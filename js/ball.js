@@ -16,7 +16,7 @@ function ball(x, y) {
 	this.showHot = function () {
 		fill(255, 152, 0);
 		strokeWeight(2);
-		stroke(252, 136, 3);
+		stroke(51);
 		ellipse(this.x, this.y, this.r * 2, this.r * 2)
 		noStroke();
 		fill(255);
