@@ -8,8 +8,10 @@ var ballStarX;
 var isGameOver = false;
 var gamePaused = false;
 var touchCorrection = true;
+var fastMode = true;
 var bgImage;
 var bgPipe, bgPipeInverted;
+var newGameModal;
 
 function preload() {
 	bgImage = loadImage('images/background.jpeg')
@@ -18,6 +20,7 @@ function preload() {
 }
 
 function setup() {
+	setupModalFunctions();
 	var headerParent = document.getElementById("header")
 	var canvasParent = document.getElementById("canvas")
 	canvasWidth = windowWidth - (windowWidth - canvasParent.offsetWidth) + 12
@@ -37,7 +40,7 @@ function draw() {
 	background(bgImage);
 	if (gamePaused) {
 		console.log("game is paused")
-		return
+		noLoop();
 	}
 
 	if (frameCount % 100 == 0) {
@@ -65,7 +68,7 @@ function draw() {
 		gameOver();
 	}
 
-	if (score % 7 == 0 && score != 0) {
+	if (fastMode && (score % 7 == 0 && score != 0)) {
 		ball.showHot();
 		textSize(40);
 		textAlign(CENTER);
@@ -160,7 +163,7 @@ function gameOver() {
 	textSize(24);
 	text(`Your score is: ${score}`, width / 2, rectY + (rectHeight / 2));
 
-	tip = "Try not to touch the edges or pipes"
+	tip = "Press control or 'R' to restart the game";
 	textStyle(ITALIC);
 	text(tip, width / 2, rectY + rectHeight - 30);
 	textStyle(NORMAL);
@@ -221,43 +224,48 @@ function registerPlayerName() {
 	resumeGame()
 }
 
-const newGameModalEl = document.getElementById('newGameModal')
-const instructionsModalEl = document.getElementById('instructionsModal')
-var newGameModal = new bootstrap.Modal(newGameModalEl, {});
+function setupModalFunctions() {
+	const newGameModalEl = document.getElementById('newGameModal')
+	const instructionsModalEl = document.getElementById('instructionsModal')
+	newGameModal = new bootstrap.Modal(newGameModalEl, {});
 
-newGameModalEl.addEventListener('show.bs.modal', event => {
-	console.log("new game modal show");
-	pauseGame()
-})
+	newGameModalEl.addEventListener('show.bs.modal', event => {
+		console.log("new game modal show");
+		pauseGame()
+	})
 
-instructionsModalEl.addEventListener('show.bs.modal', event => {
-	console.log("instructions modal show");
-	pauseGame()
-})
+	instructionsModalEl.addEventListener('show.bs.modal', event => {
+		console.log("instructions modal show");
+		pauseGame()
+	})
 
-newGameModalEl.addEventListener('hide.bs.modal', event => {
-	console.log("new game modal hide");
-	resumeGame()
-})
+	newGameModalEl.addEventListener('hide.bs.modal', event => {
+		console.log("new game modal hide");
+		resumeGame()
+	})
 
-instructionsModalEl.addEventListener('hide.bs.modal', event => {
-	console.log("instructions modal hide");
-	resumeGame()
-})
+	instructionsModalEl.addEventListener('hide.bs.modal', event => {
+		console.log("instructions modal hide");
+		resumeGame()
+	})
 
-// window.addEventListener('load', function () {
-// 	if (getPlayerName() === "Guest")
-// 		newGameModal.show(newGameModalEl)
-// })
+	// window.addEventListener('load', function () {
+	// 	if (getPlayerName() === "Guest")
+	// 		newGameModal.show(newGameModalEl)
+	// })
 
-if (typeof console != "undefined")
-	if (typeof console.log != 'undefined')
-		console.olog = console.log;
-	else
-		console.olog = function () { };
+	if (typeof console != "undefined")
+		if (typeof console.log != 'undefined')
+			console.olog = console.log;
+		else
+			console.olog = function () { };
 
-console.log = function (message) {
-	console.olog(message);
-	document.getElementById('debugDiv').append('<p>' + message + '</p>');
-};
-console.error = console.debug = console.info = console.log
+	console.log = function (message) {
+		console.olog(message);
+		let debugDiv = document.getElementById('debugDiv');
+		if (debugDiv) {
+			debugDiv.append('<p>' + message + '</p>');
+		}
+	};
+	console.error = console.debug = console.info = console.log
+}
